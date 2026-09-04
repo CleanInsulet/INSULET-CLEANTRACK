@@ -1,0 +1,124 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profiles for managers, cleaners, and supervisors",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "enum": ["manager", "cleaner", "supervisor"] },
+        "avatar": { "type": "string" },
+        "phone": { "type": "string" },
+        "assignedZone": { "type": "string" },
+        "username": { "type": "string" },
+        "email": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "departed"] },
+        "departedDate": { "type": "string" }
+      },
+      "required": ["id", "name", "role", "email"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Cleaning duties assigned to cleaners",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string", "maxLength": 200 },
+        "location": { "type": "string" },
+        "zone": { "type": "string" },
+        "assignedCleanerId": { "type": "string" },
+        "assignedCleanerName": { "type": "string" },
+        "date": { "type": "string" },
+        "startTime": { "type": "string" },
+        "endTime": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "in_progress", "submitted", "approved", "rework_requested"] },
+        "priority": { "type": "string", "enum": ["low", "medium", "high", "urgent"] },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "title", "assignedCleanerId", "date", "startTime", "endTime", "status", "priority"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "In-app notifications",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string", "maxLength": 100 },
+        "message": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "read": { "type": "boolean" },
+        "type": { "type": "string" },
+        "targetUserId": { "type": "string" }
+      },
+      "required": ["id", "title", "message", "timestamp", "read", "type"]
+    },
+    "Zone": {
+      "title": "Zone",
+      "description": "Facility cleaning zones and locations",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "description": { "type": "string" },
+        "orderIndex": { "type": "number" }
+      },
+      "required": ["id", "name"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "System operational and audit logs",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "actorName": { "type": "string" },
+        "actorRole": { "type": "string" },
+        "action": { "type": "string" },
+        "details": { "type": "string" }
+      },
+      "required": ["id", "timestamp", "actorName", "action"]
+    },
+    "Tool": {
+      "title": "Tool",
+      "description": "Cleaning tools and equipment checklist",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "orderIndex": { "type": "number" }
+      },
+      "required": ["id", "name"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles, userId matches Firebase Auth UID"
+    },
+    "/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/Task" },
+      "description": "Cleaning tasks"
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "User notifications"
+    },
+    "/zones/{zoneId}": {
+      "schema": { "$ref": "#/entities/Zone" },
+      "description": "Facility zones"
+    },
+    "/auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Audit and operational logs"
+    },
+    "/tools/{toolId}": {
+      "schema": { "$ref": "#/entities/Tool" },
+      "description": "Facility cleaning tools and equipment"
+    }
+  }
+}

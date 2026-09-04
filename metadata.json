@@ -1,0 +1,11 @@
+{
+  "name": "CleanTrack",
+  "description": "Cleaning work assignment, shift timetable, tool checklist, photo/video proof submission, real-time push notification simulator, and supervisor approval workflow.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
